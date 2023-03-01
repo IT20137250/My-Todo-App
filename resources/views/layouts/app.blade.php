@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Todo App</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Todo App</title>
 
-    @include('libraries.styles')
-</head>
-<body>
-    @include('components.nav')
+        @include('libraries.styles')
+    </head>
+    <body>
+        @include('components.nav')
 
-    @yield('content')
+        @yield('content')
 
-    @include('components.footer')
+        @include('components.footer')
 
-    @include('libraries.scripts')
-</body>
+        @include('libraries.scripts')
+    </body>
 </html>

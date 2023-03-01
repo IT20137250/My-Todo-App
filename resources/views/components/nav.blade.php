@@ -24,10 +24,19 @@
           </ul>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      @if (Auth::user())
+        <form method="POST" action="{{ route('logout') }}">
+        @csrf
+          <x-dropdown-link href="{{ route('logout') }}"
+            onclick="event.preventDefault();
+                  this.closest('form').submit();">
+            {{ __('Log Out') }}
+          </x-dropdown-link>
+        </form>
+      @else
+        <a href="{{ route('login') }}" class="btn btn-warning">Log In</a>
+        <a href="{{ route('register') }}" class="btn btn-warning">Register</a> 
+      @endif
     </div>
   </div>
 </nav>
