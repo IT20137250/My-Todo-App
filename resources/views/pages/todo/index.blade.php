@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="col-lg-8">
                             <div class="form-group">
-                                <input class="form-control form-control-lg" name="title" type="text" placeholder="Enter Task" aria-label=".form-control-lg example">
+                                <input class="form-control form-control-lg" name="title" type="text" placeholder="Enter Task" aria-label=".form-control-lg example" required>
                             </div>
                         </div>
                         <div class="col-lg-4 mb-0 d-flex">
@@ -44,13 +44,30 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('todo.delete', $task->id) }}" class="btn btn-danger">Delete</a>
+                                    <input type="hidden" class="serDel_val" value="{{ $task->id }}">
+                                    <a href="{{ route('todo.delete', $task->id) }}" class="btn btn-danger btn-block serviceDeleteBtn">Delete</a>
                                     <a href="{{ route('todo.done', $task->id) }}" class="btn btn-success">Done</a>
+                                    <a href="javascript:void(0)" class="btn btn-info" onclick="taskEditModal({{ $task->id }})">Edit</a>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="taskEdit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="taskEditLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="taskEditLabel">Edit Your Task</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="taskEditContent">
+                    ...
+                </div>
             </div>
         </div>
     </div>
@@ -66,4 +83,66 @@
     }
 </style>
     
+@endpush
+
+@push('js')
+    <script>
+        function taskEditModal(task_id) {
+            var data = {
+                task_id: task_id,
+            };
+            $.ajax({
+                url: "{{ route('todo.edit') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'GET',
+                dataType: '',
+                data: data,
+                success: function(response) {
+                    $('#taskEdit').modal('show');
+                    $('#taskEditContent').html(response);
+                }
+            });
+        }
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('.serviceDeleteBtn').click(function(e) {
+                e.preventDefault();
+                var task_id = $(this).closest("td").find('.serDel_val').val();
+                //alert(delete_id);
+                swal({
+                        title: "Are you sure?",
+                        text: "Once deleted, you will not be able to recover this data!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            var data = {
+                                "_token": $('input[name=_token]').val(),
+                                "id": task_id,
+                            };
+                            $.ajax({
+                                url: '/todo/' + task_id + '/delete/',
+                                data: data,
+                                success: function(response) {
+                                    swal(response.status, {
+                                            icon: "success",
+                                        })
+                                        .then((result) => {
+                                            location.reload();
+                                        });
+                                }
+                            });
+                        }
+                    });
+            });
+        });
+    </script>
 @endpush

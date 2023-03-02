@@ -17,6 +17,10 @@ class TodoService {
         return $this->task->all();
     }
 
+    public function get($task_id) {
+        return $this->task->find($task_id);
+    }
+
     public function store($data)
     {
         $this->task->create($data);
@@ -33,5 +37,14 @@ class TodoService {
         $task = $this->task->find($task_id);
         $task->done = 1;
         $task->update();
+    }
+
+    public function update(array $data, $task_id) {
+        $task = $this->task->find($task_id);
+        $task->update($this->edit($task, $data));
+    }
+
+    protected function edit(Todo $task, $data) {
+        return array_merge($task->toArray(), $data);
     }
 }
