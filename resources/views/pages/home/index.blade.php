@@ -7,6 +7,15 @@
                 <h1 class="page-title">Home Page</h1>
             </div>
         </div>
+        <div class="row justify-center">
+            @forelse ($posts as $post)
+                <div class="col-lg-4">
+                    <img src="{{ config('images.upload_path') }}/thumb/480x635/{{ $post->images->name }}" alt="Banner-Image">
+                </div>
+            @empty
+                <h2 class="text-danger">No banner images here..</h2>
+            @endforelse
+        </div>
     </div>
 @endsection
 
