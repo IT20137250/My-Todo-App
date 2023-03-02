@@ -38,4 +38,17 @@ class TodoController extends ParentController
         TodoFacade::update($request->all(), $task_id);
         return redirect()->back();
     }
+
+    public function sub(Request $request) {
+        $response['task'] = TodoFacade::get($request['task_id']);
+        $response['sub_tasks'] = TodoFacade::getSubTasksByTask($request['task_id']);
+        return view('pages.todo.subTask')->with($response);
+    }
+
+    //sub tasks section
+
+    public function subStore(Request $request) {
+        TodoFacade::subStore($request->all());
+        return redirect()->back();
+    }
 }

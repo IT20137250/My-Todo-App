@@ -12,7 +12,8 @@
                     <div class="row">
                         <div class="col-lg-8">
                             <div class="form-group">
-                                <input class="form-control form-control-lg" name="title" type="text" placeholder="Enter Task" aria-label=".form-control-lg example" required>
+                                <input class="form-control form-control-lg" name="title" type="text"
+                                    placeholder="Enter Task" aria-label=".form-control-lg example" required>
                             </div>
                         </div>
                         <div class="col-lg-4 mb-0 d-flex">
@@ -26,9 +27,15 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col"><h2>Title</h2></th>
-                            <th scope="col"><h2>Status</h2></th>
-                            <th scope="col"><h2>Action</h2></th>
+                            <th scope="col">
+                                <h2>Title</h2>
+                            </th>
+                            <th scope="col">
+                                <h2>Status</h2>
+                            </th>
+                            <th scope="col">
+                                <h2>Action</h2>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,9 +52,12 @@
                                 </td>
                                 <td>
                                     <input type="hidden" class="serDel_val" value="{{ $task->id }}">
-                                    <a href="{{ route('todo.delete', $task->id) }}" class="btn btn-danger btn-block serviceDeleteBtn">Delete</a>
+                                    <a href="{{ route('todo.delete', $task->id) }}"
+                                        class="btn btn-danger btn-block serviceDeleteBtn">Delete</a>
                                     <a href="{{ route('todo.done', $task->id) }}" class="btn btn-success">Done</a>
-                                    <a href="javascript:void(0)" class="btn btn-info" onclick="taskEditModal({{ $task->id }})">Edit</a>
+                                    <a href="javascript:void(0)" class="btn btn-info"
+                                        onclick="taskEditModal({{ $task->id }})">Edit</a>
+                                    <a href="{{ route('todo.sub', $task->id) }}" class="btn btn-dark">Sub Task</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -58,7 +68,8 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="taskEdit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="taskEditLabel" aria-hidden="true">
+    <div class="modal fade" id="taskEdit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="taskEditLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -74,15 +85,13 @@
 @endsection
 
 @push('css')
-
-<style>
-    .page-title {
-        padding-top: 10vh;
-        font-size: 4rem;
-        color: #771acf;
-    }
-</style>
-    
+    <style>
+        .page-title {
+            padding-top: 10vh;
+            font-size: 4rem;
+            color: #771acf;
+        }
+    </style>
 @endpush
 
 @push('js')
